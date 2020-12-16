@@ -2,7 +2,7 @@ from math import *
 from random import *
 import matplotlib.pyplot as plt
 import numpy as np
-
+'''
 print("Bienvenue dans la simulation de l'attaque double spend.")
 print("Nous allons commencer par vous demander les valeurs que vou voulez attribuer à chhaque variable:")
 
@@ -24,7 +24,7 @@ A1=int(input())
 
 print("Le montant de la double spend v (v > 0):")
 v1=float(input())
-
+'''
 
 def simulation_doublespend(q,n,z,A,v):
     k=1
@@ -40,13 +40,16 @@ def simulation_doublespend(q,n,z,A,v):
         if(random()<q):
             i=i+1
             T=T+t0
-            while(retard<A and mineur_h<z and mineur_h<z):
+            mineur_h=0
+            mineur_a=0
+            retard=0
+            while(retard<A and mineur_h<z and mineur_a<z):
                 if(random()<q):
                     mineur_a= mineur_a+1
                 else:
                     mineur_h = mineur_h+1
                 retard=mineur_h-mineur_a
-            if(mineur_h==z):
+            if(mineur_a==z):
                 R=R+b+v
                 T=T+t0
             else:
@@ -55,6 +58,7 @@ def simulation_doublespend(q,n,z,A,v):
         else:
             i=i+1
             T=T+t0
-    print("Rendement: "+ str(R))
-    print("Temps en secondes:"+str(T))
+    #print("Rendement: "+ str(R))
+    #print("Temps en secondes:"+str(T))
     return((R,T))
+
