@@ -25,11 +25,6 @@ A1=int(input())
 print("Le montant de la double spend v (v > 0):")
 v1=float(input())
 
-vendeur z=10
-A=5
-attaquant arrive à 10 avant les honnetes mineurs il a gagné
-
-si attaquant il arrive à 8 et honnetes mineurs ils sont à 10 on continue
 
 def simulation_doublespend(q,n,z,A,v):
     k=1
@@ -51,7 +46,7 @@ def simulation_doublespend(q,n,z,A,v):
                 else:
                     mineur_h = mineur_h+1
                 retard=mineur_h-mineur_a
-            if(mineur_h=z):
+            if(mineur_h==z):
                 R=R+b+v
                 T=T+t0
             else:
