@@ -58,3 +58,21 @@ def simulation_doublespend(q,n,z,A,v):
     print("Rendement: "+ str(R))
     print("Temps en secondes:"+str(T))
     return((R,T))
+
+
+def B(a,b):
+    B = factorial(a - 1) * factorial(b-1)/factorial(a+b-1)
+    return B
+
+#if we assume: A>=2 and A>=z>=1
+def attacker_revenue_ratio(z,v,q):
+    b=6.25
+    t0=600
+    #calcul of the binomial coefficient zC(2z-1)
+    Cnk = factorial(2*z-1)/( factorial(z-1)*factorial(z) )
+    #revenue ratio of the attacker
+    Ra = (b/t0)*(2*Cnk*(v/b+1)+2/B(z,z))*pow(q,z+1)
+
+    return Ra
+
+
