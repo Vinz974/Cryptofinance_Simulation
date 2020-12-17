@@ -17,13 +17,16 @@ def simulation_doublespend(q,n,z,A,v):
         if(random()<q):
             i=i+1
             T=T+t0
-            while(retard<A and mineur_h<z and mineur_h<z):
+            mineur_h=0
+            mineur_a=0
+            retard=0
+            while(retard<A and mineur_h<z and mineur_a<z):
                 if(random()<q):
                     mineur_a= mineur_a+1
                 else:
                     mineur_h = mineur_h+1
                 retard=mineur_h-mineur_a
-            if(mineur_h==z):
+            if(mineur_a==z):
                 R=R+b+v
                 T=T+t0
             else:
@@ -72,3 +75,4 @@ print("Nous allons commencer par vous demander les valeurs que vou voulez attrib
 
 # (R,T) = simulation_doublespend(q1,n1,z1,A1,v1)
 (R,T) = simulation_doublespend(0.30,100,6,100,1)
+
