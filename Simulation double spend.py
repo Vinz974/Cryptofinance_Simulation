@@ -3,29 +3,6 @@ from random import *
 import matplotlib.pyplot as plt
 import numpy as np
 
-print("Bienvenue dans la simulation de l'attaque double spend.")
-print("Nous allons commencer par vous demander les valeurs que vou voulez attribuer à chhaque variable:")
-
-print("Le taux de hachage relatif q (0 < q < 0.5):")
-
-q1= float(input())
-
-print("Le nombre de cycle d'attaques n (n > 0):")
-
-n1=int(input())
-
-print("Le nombre de confirmations z (z > 0):")
-
-z1=int(input())
-
-print("Le seuil de tolerance A ( A > 0):")
-
-A1=int(input())
-
-print("Le montant de la double spend v (v > 0):")
-v1=float(input())
-
-
 def simulation_doublespend(q,n,z,A,v):
     k=1
     R=0
@@ -76,3 +53,22 @@ def attacker_revenue_ratio(z,v,q):
     return Ra
 
 
+
+#---------------------------------- Main ----------------------------------
+
+print("Bienvenue dans la simulation de l'attaque double spend.")
+print("Nous allons commencer par vous demander les valeurs que vou voulez attribuer à chhaque variable:")
+
+# print("Le taux de hachage relatif q (0 < q < 0.5):")
+# q1= float(input())
+# print("Le nombre de cycle d'attaques n (n > 0):")
+# n1=int(input())
+# print("Le nombre de confirmations z (z > 0):")
+# z1=int(input())
+# print("Le seuil de tolerance A ( A > 0):")
+# A1=int(input())
+# print("Le montant de la double spend v (v > 0):")
+# v1=float(input())
+
+# (R,T) = simulation_doublespend(q1,n1,z1,A1,v1)
+(R,T) = simulation_doublespend(0.30,100,6,100,1)
