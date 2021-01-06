@@ -35,8 +35,8 @@ def simulation_doublespend(q,n,z,A,v):
         else:
             i=i+1
             T=T+t0
-    print("Rendement: "+ str(R))
-    print("Temps en secondes:"+str(T))
+    #print("Rendement: "+ str(R))
+    #print("Temps en secondes:"+str(T))
     return((R,T))
 
 
@@ -59,8 +59,8 @@ def attacker_revenue_ratio(z,v,q):
 
 #---------------------------------- Main ----------------------------------
 
-print("Bienvenue dans la simulation de l'attaque double spend.")
-print("Nous allons commencer par vous demander les valeurs que vou voulez attribuer à chhaque variable:")
+#print("Bienvenue dans la simulation de l'attaque double spend.")
+#print("Nous allons commencer par vous demander les valeurs que vou voulez attribuer à chhaque variable:")
 
 # print("Le taux de hachage relatif q (0 < q < 0.5):")
 # q1= float(input())
@@ -75,27 +75,69 @@ print("Nous allons commencer par vous demander les valeurs que vou voulez attrib
 
 # (R,T) = simulation_doublespend(q1,n1,z1,A1,v1)
 
-(R,T) = simulation_doublespend(0.30,100,6,100,1)
+#(R,T) = simulation_doublespend(0.30,100,6,100,1)
+def RMT():
+    #Rendement theorique en fonction de q
+    x = np.linspace(0, 0.5, 100)
+    y=np.linspace(0,0.5,100)
+    for i in range(len(y)):
+        y[i]=attacker_revenue_ratio(float(valider()[2]),float(valider()[4]),x[i])
+    plt.plot(x,y)
+    plt.show()
 
-#Rendement theorique en fonction de q
-'''
-x = np.linspace(0, 0.5, 100)
-y=np.linspace(0,0.5,100)
-for i in range(len(y)):
-    y[i]=attacker_revenue_ratio(10,10,x[i])
-plt.plot(x,y)
-plt.show()
-'''
+def RMP():
+    #Rendement pratique en fonction de q
+    x = np.linspace(0, 0.5, 100)
+    y=np.linspace(0,0.5,100)
+    for i in range(len(y)):
+        RT=simulation_doublespend(x[i],float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4]))
+        y[i]=RT[0]/RT[1]
+    plt.plot(x,y)
+    plt.show()
 
-#Rendement pratique en fonction de q
-'''
-x = np.linspace(0, 0.5, 1000)
-y=np.linspace(0,0.5,1000)
-for i in range(len(y)):
-    y[i]=simulation_doublespend(x[i],1000,10,3,10)[0]
-plt.plot(x,y)
-plt.show()
-'''
+def RHT():
+    #Rendement honnete theorique en fonction de q
+    x1 = np.linspace(0, 0.5, 100)
+    y1=np.linspace(0,0.5,100)
+    for i in range(len(y1)):
+        y1[i]=(x1[i]*6.25)/600
+    plt.plot(x1,y1)
+    plt.grid(True)
+    plt.show()
+
+def RMP_RHT():
+    #Rendement pratique en fonction de q
+    x = np.linspace(0, 0.5, 100)
+    y=np.linspace(0,0.5,100)
+    for i in range(len(y)):
+        RT=simulation_doublespend(x[i],float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4]))
+        y[i]=RT[0]/RT[1]
+    plt.plot(x,y)
+    #Rendement honnete theorique en fonction de q
+    x1 = np.linspace(0, 0.5, 100)
+    y1=np.linspace(0,0.5,100)
+    for i in range(len(y1)):
+        y1[i]=(x1[i]*6.25)/600
+    plt.plot(x1,y1)
+    plt.grid(True)
+    plt.show()
+
+def RMT_RHT():
+    #Rendement theorique en fonction de q
+    x = np.linspace(0, 0.5, 100)
+    y=np.linspace(0,0.5,100)
+    for i in range(len(y)):
+        y[i]=attacker_revenue_ratio(float(valider()[2]),float(valider()[4]),x[i])
+    plt.plot(x,y)
+    #Rendement honnete theorique en fonction de q
+    x1 = np.linspace(0, 0.5, 100)
+    y1=np.linspace(0,0.5,100)
+    for i in range(len(y1)):
+        y1[i]=(x1[i]*6.25)/600
+    plt.plot(x1,y1)
+    plt.grid(True)
+    plt.show()
+
 #Rendement theorique en fonction de z
 '''
 x1=[0]*30
@@ -121,5 +163,54 @@ for i in range(len(y)):
 plt.plot(x,y)
 plt.show()
 '''
+import tkinter
 
+top = tkinter.Tk()
+
+def double():
+    print("(Gain, Temps)")
+    print(simulation_doublespend(float(valider()[0]),float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4])))
+
+def valider():
+    Q=q.get()
+    N=n.get()
+    Z=z.get()
+    A=a.get()
+    V=v.get()
+    return([Q,N,Z,A,V])
+
+lblQ=tkinter.Label(top,text="q")
+lblQ.pack()
+q=tkinter.Entry(top,text="q")
+q.pack()
+lblN=tkinter.Label(top,text="n (à 10000 pour des graphiques plus lisibles)")
+lblN.pack()
+n=tkinter.Entry(top,text="n")
+n.pack()
+lblZ=tkinter.Label(top,text="z")
+lblZ.pack()
+z=tkinter.Entry(top,text="z")
+z.pack()
+lblA=tkinter.Label(top,text="A")
+lblA.pack()
+a=tkinter.Entry(top,text="a")
+a.pack()
+lblV=tkinter.Label(top,text="v")
+lblV.pack()
+v=tkinter.Entry(top,text="v")
+v.pack()
+
+C=tkinter.Button(top,text="double spend",command =double)
+C.pack()
+A=tkinter.Button(top, text ="rendement malhonnete pratique", command = RMP)
+A.pack()
+AB=tkinter.Button(top, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
+AB.pack()
+B1 = tkinter.Button(top, text ="rendement malhonnete theorique", command = RMT)
+B1.pack()
+D=tkinter.Button(top,text="rendement honnete theorique",command =RHT)
+D.pack()
+E=tkinter.Button(top,text="Rendement honnete et malhonnete theorique",command =RMT_RHT)
+E.pack()
+top.mainloop()
 

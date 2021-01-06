@@ -50,9 +50,11 @@ def RMP():
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
-        RT=simulation_selfish_mining(10000,x[i],0.1)
+        RT=simulation_selfish_mining(float(valider()[1]),x[i],float(valider()[2]))
         y[i]=(RT[0])/(RT[1])
+    plt.text(0.1,0.004,"Gamma="+valider()[2])
     plt.plot(x,y)
+    plt.grid()
     plt.show()
 
 def RMP_RHT():
@@ -60,7 +62,7 @@ def RMP_RHT():
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
-        RT=simulation_selfish_mining(10000,x[i],0.1)
+        RT=simulation_selfish_mining(float(valider()[1]),x[i],float(valider()[2]))
         y[i]=(RT[0])/(RT[1])
     plt.plot(x,y)
     #Rendement honnete theorique
@@ -85,7 +87,7 @@ def RMT():
     x = np.linspace(0, 0.5, 100)
     y =np.linspace(0,0.5,100)
     for i in range(len(y)):
-        y[i]=rendement_theorique(x[i],0.1)
+        y[i]=rendement_theorique(x[i],float(valider()[2]))
     plt.plot(x,y)
     plt.show()
 
@@ -102,7 +104,7 @@ def RMT_RHT():
     x = np.linspace(0, 0.5, 100)
     y =np.linspace(0,0.5,100)
     for i in range(len(y)):
-        y[i]=rendement_theorique(x[i],0)
+        y[i]=rendement_theorique(x[i],float(valider()[2]))
     plt.plot(x,y)
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
@@ -116,16 +118,35 @@ import tkinter
 
 top = tkinter.Tk()
 
-def helloCallBack():
-   print(simulation_selfish_mining(1000,0.1,0.1))
+def selfish():
+   print(simulation_selfish_mining(float(valider()[1]),float(valider()[0]),float(valider()[2])))
 
-C=tkinter.Button(top,text="selfish mining",command =helloCallBack)
+def valider():
+    Q=q.get()
+    N=n.get()
+    GAMMA=gamma.get()
+    return([Q,N,GAMMA])
+
+lblQ=tkinter.Label(top,text="q")
+lblQ.pack()
+q=tkinter.Entry(top,text="q")
+q.pack()
+lblN=tkinter.Label(top,text="n (à 10000 pour des graphiques plus lisibles)")
+lblN.pack()
+n=tkinter.Entry(top,text="n")
+n.pack()
+lblGAMMA=tkinter.Label(top,text="gamma")
+lblGAMMA.pack()
+gamma=tkinter.Entry(top,text="gamma")
+gamma.pack()
+
+C=tkinter.Button(top,text="selfish mining",command =selfish)
 C.pack()
-A=tkinter.Button(top, text ="rendement Malhonnete pratique", command = RMP)
+A=tkinter.Button(top, text ="rendement malhonnete pratique", command = RMP)
 A.pack()
-AB=tkinter.Button(top, text ="rendement Malhonnete pratique et honnete theorique", command = RMP_RHT)
+AB=tkinter.Button(top, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
 AB.pack()
-B = tkinter.Button(top, text ="rendement Malhonnete theroque", command = RMT)
+B = tkinter.Button(top, text ="rendement malhonnete theroque", command = RMT)
 B.pack()
 D=tkinter.Button(top,text="rendement honnete theorique",command =RHT)
 D.pack()
