@@ -93,7 +93,7 @@ def RMP_RHT():
         y1[i]=(x1[i]*6.25)/600
     fig = Figure(figsize=(6, 5), dpi=100)
     fig.add_subplot(111).plot(x,y,x1,y1)
-    fig.suptitle("Rendement Malhonnete Pratique et Rendement Honnete")
+    fig.legend(["Rendement malhonnete Pratique","Rendement Honnete"])
     #fig.add_subplot(111).plot(x1,y1)
     canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
     canvas.draw()
