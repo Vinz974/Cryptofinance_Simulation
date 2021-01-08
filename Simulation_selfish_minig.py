@@ -4,7 +4,13 @@ from math import *
 from random import *
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+# Implement the default Matplotlib key bindings.
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
+import tkinter
 
+global top
 def simulation_selfish_mining(n,q,gamma):
     R=0
     C=0
@@ -46,6 +52,9 @@ def simulation_selfish_mining(n,q,gamma):
     return(R,T)
 
 def RMP():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
     #Rendement malhonnete pratique
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
@@ -53,26 +62,50 @@ def RMP():
         RT=simulation_selfish_mining(float(valider()[1]),x[i],float(valider()[2]))
         y[i]=(RT[0])/(RT[1])
     plt.text(0.1,0.004,"Gamma="+valider()[2])
-    plt.plot(x,y)
-    plt.grid()
-    plt.show()
+    #plt.plot(x,y)
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y)
+    fig.suptitle("Rendement Malhonnete Pratique")
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+    #plt.grid()
+    #plt.show()
 
 def RMP_RHT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
     #Rendement malhonnete pratique
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
         RT=simulation_selfish_mining(float(valider()[1]),x[i],float(valider()[2]))
         y[i]=(RT[0])/(RT[1])
-    plt.plot(x,y)
+    #plt.plot(x,y)
     #Rendement honnete theorique
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
-    plt.plot(x1,y1)
-    plt.grid(True)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y,x1,y1)
+    fig.suptitle("Rendement Malhonnete Pratique et Rendement Honnete")
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+    #plt.plot(x1,y1)
+    #plt.grid(True)
+    #plt.show()
+
 
 def rendement_theorique(q,gamma):
     p=1-q
@@ -84,42 +117,83 @@ def rendement_theorique(q,gamma):
 
 #Rendement malhonnete theorique
 def RMT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
     x = np.linspace(0, 0.5, 100)
     y =np.linspace(0,0.5,100)
     for i in range(len(y)):
         y[i]=rendement_theorique(x[i],float(valider()[2]))
-    plt.plot(x,y)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y)
+    fig.suptitle("Rendement Malhonnete Theorique")
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+    #plt.plot(x,y)
+    #plt.show()
 
 def RHT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
-    plt.plot(x1,y1)
-    plt.grid(True)
-    plt.show()
+    #plt.plot(x1,y1)
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x1,y1)
+    fig.suptitle("Rendement Honnete")
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+    #plt.grid(True)
+    #plt.show()
 
 def RMT_RHT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
     x = np.linspace(0, 0.5, 100)
     y =np.linspace(0,0.5,100)
     for i in range(len(y)):
         y[i]=rendement_theorique(x[i],float(valider()[2]))
-    plt.plot(x,y)
+    #plt.plot(x,y)
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
-    plt.plot(x1,y1)
-    plt.grid(True)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y,x1,y1)
+    fig.legend(["Rendement malhonnete Theorique","Rendement Honnete"])
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
-import tkinter
+    #plt.plot(x1,y1)
+    #plt.grid(True)
+    #plt.show()
+
 
 top = tkinter.Tk()
-
+top.wm_title("Simulation selfish Mining")
 def selfish():
-   print(simulation_selfish_mining(float(valider()[1]),float(valider()[0]),float(valider()[2])))
+    selfish=simulation_selfish_mining(float(valider()[1]),float(valider()[0]),float(valider()[2]))
+    Res.delete(0,50)
+    Res.insert(0,"Gain(BTC): "+str(selfish[0])+" Temps(s): "+ str(selfish[1]))
 
 def valider():
     Q=q.get()
@@ -127,39 +201,56 @@ def valider():
     GAMMA=gamma.get()
     return([Q,N,GAMMA])
 
-lblQ=tkinter.Label(top,text="q")
-lblQ.pack()
-q=tkinter.Entry(top,text="q")
-q.pack()
-lblN=tkinter.Label(top,text="n (à 10000 pour des graphiques plus lisibles)")
-lblN.pack()
-n=tkinter.Entry(top,text="n")
-n.pack()
-lblGAMMA=tkinter.Label(top,text="gamma")
-lblGAMMA.pack()
-gamma=tkinter.Entry(top,text="gamma")
-gamma.pack()
+Frame1=tkinter.Frame(top)
+Frame2=tkinter.Frame(top)
+Frame1.pack()
+Frame2.pack()
+lblQ=tkinter.Label(Frame1,text="q")
+lblQ.grid(row=1,column=1)
+q=tkinter.Entry(Frame1,text="q")
+q.insert(0,str(0.2))
+q.grid(row=2,column=1)
+lblN=tkinter.Label(Frame1,text="                         n (à 10000 pour des graphiques plus lisibles)                      ")
+lblN.grid(row=1,column=2)
+n=tkinter.Entry(Frame1,text="n")
+n.insert(0,str(10000))
+n.grid(row=2,column=2)
+lblGAMMA=tkinter.Label(Frame1,text="gamma")
+lblGAMMA.grid(row=3,column=1)
+gamma=tkinter.Entry(Frame1,text="gamma")
+gamma.insert(0,str(0.2))
+gamma.grid(row=4,column=1)
 
-C=tkinter.Button(top,text="selfish mining",command =selfish)
-C.pack()
-A=tkinter.Button(top, text ="rendement malhonnete pratique", command = RMP)
-A.pack()
-AB=tkinter.Button(top, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
-AB.pack()
-B = tkinter.Button(top, text ="rendement malhonnete theroque", command = RMT)
-B.pack()
-D=tkinter.Button(top,text="rendement honnete theorique",command =RHT)
-D.pack()
-E=tkinter.Button(top,text="Rendement honnete et malhonnete theorique",command =RMT_RHT)
-E.pack()
+Res=tkinter.Entry(Frame1,width=50)
+Res.grid(row=4,column=2)
+lbl1=tkinter.Label(Frame1,text="")
+lbl1.grid(row=5,column=1)
+
+C=tkinter.Button(Frame1,text="selfish mining",command =selfish)
+C.grid(row=3,column=2)
+A=tkinter.Button(Frame1, text ="rendement malhonnete pratique", command = RMP)
+A.grid(row=6,column=1)
+AB=tkinter.Button(Frame1, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
+AB.grid(row=7,column=1)
+B = tkinter.Button(Frame1, text ="rendement malhonnete theroque", command = RMT)
+B.grid(row=6,column=2)
+D=tkinter.Button(Frame1,text="rendement honnete theorique",command =RHT)
+D.grid(row=7,column=2)
+E=tkinter.Button(Frame1,text="Rendement honnete et malhonnete theorique",command =RMT_RHT)
+E.grid(row=8,column=1)
+lbl3=tkinter.Label(Frame1,text="")
+lbl3.grid(row=9,column=1)
+lblQ=tkinter.Label(Frame2,text="Graphique")
+lblQ.pack()
+#lbl2=tkinter.Label(Frame1,text="Graphique")
+#lbl2.grid(row=10,column=1)
+def _quit():
+    top.quit()     # stops mainloop
+    top.destroy()  # this is necessary on Windows to prevent
+                    # Fatal Python Error: PyEval_RestoreThread: NULL tstate
+
+
+button = tkinter.Button(master=Frame1, text="Quit here don't close the window", command=_quit)
+button.grid(row=8,column=2)
+
 top.mainloop()
-'''
-top = tkinter.Tk()
-L1 = Label(top, text="User Name")
-L1.pack( side = LEFT)
-E1 = Entry(top, bd =5)
-E1.pack(side = RIGHT)
-A=top.getdouble()
-print(A)
-top.mainloop()
-'''

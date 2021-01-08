@@ -2,6 +2,13 @@ from math import *
 from random import *
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+# Implement the default Matplotlib key bindings.
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
+import tkinter
+
+global top
 
 def simulation_doublespend(q,n,z,A,v):
     k=1
@@ -77,66 +84,125 @@ def attacker_revenue_ratio(z,v,q):
 
 #(R,T) = simulation_doublespend(0.30,100,6,100,1)
 def RMT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
+
     #Rendement theorique en fonction de q
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
         y[i]=attacker_revenue_ratio(float(valider()[2]),float(valider()[4]),x[i])
-    plt.plot(x,y)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y)
+    fig.legend(["Rendement malhonnete Theorique"])
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
 
 def RMP():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
+
     #Rendement pratique en fonction de q
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
         RT=simulation_doublespend(x[i],float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4]))
         y[i]=RT[0]/RT[1]
-    plt.plot(x,y)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y)
+    fig.legend(["Rendement malhonnete Pratique"])
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
 
 def RHT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
     #Rendement honnete theorique en fonction de q
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
-    plt.plot(x1,y1)
-    plt.grid(True)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x1,y1)
+    fig.legend(["Rendement Honnete"])
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
 
 def RMP_RHT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
+
     #Rendement pratique en fonction de q
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
         RT=simulation_doublespend(x[i],float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4]))
         y[i]=RT[0]/RT[1]
-    plt.plot(x,y)
     #Rendement honnete theorique en fonction de q
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
-    plt.plot(x1,y1)
-    plt.grid(True)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y,x1,y1)
+    fig.legend(["Rendement malhonnete Pratique","Rendement Honnete"])
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
 
 def RMT_RHT():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
+
     #Rendement theorique en fonction de q
     x = np.linspace(0, 0.5, 100)
     y=np.linspace(0,0.5,100)
     for i in range(len(y)):
         y[i]=attacker_revenue_ratio(float(valider()[2]),float(valider()[4]),x[i])
-    plt.plot(x,y)
     #Rendement honnete theorique en fonction de q
     x1 = np.linspace(0, 0.5, 100)
     y1=np.linspace(0,0.5,100)
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
-    plt.plot(x1,y1)
-    plt.grid(True)
-    plt.show()
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y,x1,y1)
+    fig.legend(["Rendement malhonnete Theorique","Rendement Honnete"])
+    #fig.add_subplot(111).plot(x1,y1)
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
 
 #Rendement theorique en fonction de z
 '''
@@ -163,13 +229,13 @@ for i in range(len(y)):
 plt.plot(x,y)
 plt.show()
 '''
-import tkinter
 
 top = tkinter.Tk()
 
 def double():
-    print("(Gain, Temps)")
-    print(simulation_doublespend(float(valider()[0]),float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4])))
+    doubleSpend=simulation_doublespend(float(valider()[0]),float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4]))
+    Res.delete(0,50)
+    Res.insert(0,"Gain(BTC): "+str(doubleSpend[0])+" Temps(s): "+ str(doubleSpend[1]))
 
 def valider():
     Q=q.get()
@@ -179,38 +245,64 @@ def valider():
     V=v.get()
     return([Q,N,Z,A,V])
 
-lblQ=tkinter.Label(top,text="q")
-lblQ.pack()
-q=tkinter.Entry(top,text="q")
-q.pack()
-lblN=tkinter.Label(top,text="n (à 10000 pour des graphiques plus lisibles)")
-lblN.pack()
-n=tkinter.Entry(top,text="n")
-n.pack()
-lblZ=tkinter.Label(top,text="z")
-lblZ.pack()
-z=tkinter.Entry(top,text="z")
-z.pack()
-lblA=tkinter.Label(top,text="A")
-lblA.pack()
-a=tkinter.Entry(top,text="a")
-a.pack()
-lblV=tkinter.Label(top,text="v")
-lblV.pack()
-v=tkinter.Entry(top,text="v")
-v.pack()
+Frame1=tkinter.Frame(top)
+Frame2=tkinter.Frame(top)
+Frame1.pack()
+Frame2.pack()
+lblQ=tkinter.Label(Frame1,text="q")
+lblQ.grid(row=1,column=1)
+q=tkinter.Entry(Frame1,text="q")
+q.insert(0,str(0.2))
+q.grid(row=2,column=1)
+lblN=tkinter.Label(Frame1,text="n (à 10000 pour des graphiques plus lisibles)")
+lblN.grid(row=1,column=2)
+n=tkinter.Entry(Frame1,text="n")
+n.insert(0,str(10000))
+n.grid(row=2,column=2)
+lblZ=tkinter.Label(Frame1,text="z")
+lblZ.grid(row=3,column=1)
+z=tkinter.Entry(Frame1,text="z")
+z.insert(0,str(10))
+z.grid(row=4,column=1)
+lblA=tkinter.Label(Frame1,text="A")
+lblA.grid(row=3,column=2)
+a=tkinter.Entry(Frame1,text="a")
+a.insert(0,str(5))
+a.grid(row=4,column=2)
+lblV=tkinter.Label(Frame1,text="v")
+lblV.grid(row=1,column=3)
+v=tkinter.Entry(Frame1,text="v")
+v.insert(0,str(10))
+v.grid(row=2,column=3)
 
-C=tkinter.Button(top,text="double spend",command =double)
-C.pack()
-A=tkinter.Button(top, text ="rendement malhonnete pratique", command = RMP)
-A.pack()
-AB=tkinter.Button(top, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
-AB.pack()
-B1 = tkinter.Button(top, text ="rendement malhonnete theorique", command = RMT)
-B1.pack()
-D=tkinter.Button(top,text="rendement honnete theorique",command =RHT)
-D.pack()
-E=tkinter.Button(top,text="Rendement honnete et malhonnete theorique",command =RMT_RHT)
-E.pack()
+
+C=tkinter.Button(Frame1,text="double spend",command =double)
+C.grid(row=3,column=3)
+Res=tkinter.Entry(Frame1,width=50)
+Res.grid(row=4,column=3)
+lbl1=tkinter.Label(Frame1,text="")
+lbl1.grid(row=5,column=3)
+
+A=tkinter.Button(Frame1, text ="rendement malhonnete pratique", command = RMP)
+A.grid(row=6,column=1)
+AB=tkinter.Button(Frame1, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
+AB.grid(row=7,column=1)
+B1 = tkinter.Button(Frame1, text ="rendement malhonnete theorique", command = RMT)
+B1.grid(row=6,column=2)
+D=tkinter.Button(Frame1,text="rendement honnete theorique",command =RHT)
+D.grid(row=7,column=2)
+E=tkinter.Button(Frame1,text="Rendement honnete et malhonnete theorique",command =RMT_RHT)
+E.grid(row=6,column=3)
+
+lblQ=tkinter.Label(Frame2,text="Graphique")
+lblQ.pack()
+def _quit():
+    top.quit()     # stops mainloop
+    top.destroy()  # this is necessary on Windows to prevent
+                    # Fatal Python Error: PyEval_RestoreThread: NULL tstate
+
+
+button = tkinter.Button(master=Frame1, text="Quit here don't close the window", command=_quit)
+button.grid(row=7,column=3)
 top.mainloop()
 
