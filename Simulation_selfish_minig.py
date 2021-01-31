@@ -106,6 +106,31 @@ def RMP_RHT():
     #plt.grid(True)
     #plt.show()
 
+def RMP_for_connectivity():
+    if len(Frame2.winfo_children())>1:
+        for i in range (len(Frame2.winfo_children())-1):
+            Frame2.winfo_children()[1].destroy()
+    #Rendement malhonnete pratique
+    x = np.linspace(0, 0.5, 100)
+    y=np.linspace(0,0.5,100)
+    for i in range(len(y)):
+        RT=simulation_selfish_mining(float(valider()[1]),float(valider()[0]),x[i])
+        y[i]=(RT[0])/(RT[1])
+    plt.text(0.1,0.004,"Gamma="+valider()[2])
+    #plt.plot(x,y)
+    fig = Figure(figsize=(6, 5), dpi=100)
+    fig.add_subplot(111).plot(x,y)
+    fig.suptitle("Rendement Malhonnete Pratique en fct de la connectivité")
+    canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
+    canvas.draw()
+    #canvas.get_tk_widget().grid(row=13,column=1)
+    toolbar = NavigationToolbar2Tk(canvas,Frame2)
+    toolbar.update()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+    #plt.grid()
+    #plt.show()
+
+
 
 def rendement_theorique(q,gamma):
     p=1-q
@@ -232,6 +257,11 @@ A=tkinter.Button(Frame1, text ="rendement malhonnete pratique", command = RMP)
 A.grid(row=6,column=1)
 AB=tkinter.Button(Frame1, text ="rendement malhonnete pratique et honnete theorique", command = RMP_RHT)
 AB.grid(row=7,column=1)
+
+EE=tkinter.Button(Frame1, text ="rendement malhonnete en fct de la connectivité", command = RMP_for_connectivity)
+EE.grid(row=10,column=1)
+
+
 B = tkinter.Button(Frame1, text ="rendement malhonnete theroque", command = RMT)
 B.grid(row=6,column=2)
 D=tkinter.Button(Frame1,text="rendement honnete theorique",command =RHT)

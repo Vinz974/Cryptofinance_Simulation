@@ -94,8 +94,9 @@ def RMT():
     for i in range(len(y)):
         y[i]=attacker_revenue_ratio(float(valider()[2]),float(valider()[4]),x[i])
     fig = Figure(figsize=(6, 5), dpi=100)
+    fig.suptitle('Theoritical dishonest rate of return as a function of q')
     fig.add_subplot(111).plot(x,y)
-    fig.legend(["Rendement malhonnete Theorique"])
+    fig.legend(["Rendement malhonnete Theorique"],loc='lower right')
     #fig.add_subplot(111).plot(x1,y1)
     canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
     canvas.draw()
@@ -117,8 +118,9 @@ def RMP():
         RT=simulation_doublespend(x[i],float(valider()[1]),float(valider()[2]),float(valider()[3]),float(valider()[4]))
         y[i]=RT[0]/RT[1]
     fig = Figure(figsize=(6, 5), dpi=100)
+    fig.suptitle('Practical dishonest rate of return as a function of q')
     fig.add_subplot(111).plot(x,y)
-    fig.legend(["Rendement malhonnete Pratique"])
+    fig.legend(["Rendement malhonnete Pratique"],loc='lower right')
     #fig.add_subplot(111).plot(x1,y1)
     canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
     canvas.draw()
@@ -138,8 +140,9 @@ def RHT():
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
     fig = Figure(figsize=(6, 5), dpi=100)
+    fig.suptitle('Theoritical honest rate of return as a function of q')
     fig.add_subplot(111).plot(x1,y1)
-    fig.legend(["Rendement Honnete"])
+    fig.legend(["Rendement Honnete"],loc='lower right')
     #fig.add_subplot(111).plot(x1,y1)
     canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
     canvas.draw()
@@ -166,8 +169,9 @@ def RMP_RHT():
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
     fig = Figure(figsize=(6, 5), dpi=100)
+    fig.suptitle('Comparison of honest and dishonest performance')
     fig.add_subplot(111).plot(x,y,x1,y1)
-    fig.legend(["Rendement malhonnete Pratique","Rendement Honnete"])
+    fig.legend(["Rendement malhonnete Pratique","Rendement Honnete"],loc='lower right')
     #fig.add_subplot(111).plot(x1,y1)
     canvas = FigureCanvasTkAgg(fig, master=Frame2)  # A tk.DrawingArea.
     canvas.draw()
@@ -193,6 +197,7 @@ def RMT_RHT():
     for i in range(len(y1)):
         y1[i]=(x1[i]*6.25)/600
     fig = Figure(figsize=(6, 5), dpi=100)
+    fig.suptitle('Comparison of theoritical honest and dishonest performance')
     fig.add_subplot(111).plot(x,y,x1,y1)
     fig.legend(["Rendement malhonnete Theorique","Rendement Honnete"])
     #fig.add_subplot(111).plot(x1,y1)
